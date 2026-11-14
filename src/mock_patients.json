@@ -1,0 +1,192 @@
+[
+  {
+    "patient_id": "P-1001",
+    "first_name": "Marcus",
+    "last_name": "Sterling",
+    "age": 52,
+    "gender": "Male",
+    "blood_type": "A+",
+    "chronic_conditions": [
+      "Hypertension",
+      "Asthma"
+    ],
+    "recent_visits": [
+      {
+        "date": "2023-11-14",
+        "department": "Pulmonology",
+        "reason": "Shortness of breath, asthma exacerbation",
+        "diagnosis": "Acute exacerbation of moderate persistent asthma",
+        "treatment_plan": "Prescribed oral corticosteroids for 5 days. Increased dosage of inhaled corticosteroid.",
+        "attending_physician": "Dr. Sarah Chen"
+      },
+      {
+        "date": "2023-05-22",
+        "department": "Primary Care",
+        "reason": "Annual physical",
+        "diagnosis": "Stable hypertension",
+        "treatment_plan": "Continue Lisinopril 20mg daily. Recommend lifestyle modifications.",
+        "attending_physician": "Dr. Michael Reynolds"
+      }
+    ]
+  },
+  {
+    "patient_id": "P-1002",
+    "first_name": "Elena",
+    "last_name": "Rostova",
+    "age": 28,
+    "gender": "Female",
+    "blood_type": "O-",
+    "chronic_conditions": [],
+    "recent_visits": [
+      {
+        "date": "2023-12-05",
+        "department": "Orthopedics",
+        "reason": "Right ankle pain following a fall during a run",
+        "diagnosis": "Grade 2 lateral ankle sprain",
+        "treatment_plan": "RICE protocol. Prescribed physical therapy for 4 weeks. Air cast boot provided.",
+        "attending_physician": "Dr. James Aris"
+      }
+    ]
+  },
+  {
+    "patient_id": "P-1003",
+    "first_name": "William",
+    "last_name": "Hayes",
+    "age": 71,
+    "gender": "Male",
+    "blood_type": "B+",
+    "chronic_conditions": [
+      "Osteoarthritis",
+      "Atrial Fibrillation",
+      "Coronary Artery Disease"
+    ],
+    "recent_visits": [
+      {
+        "date": "2024-01-10",
+        "department": "Cardiology",
+        "reason": "Palpitations and mild dizziness",
+        "diagnosis": "Paroxysmal atrial fibrillation episode",
+        "treatment_plan": "Adjusted Apixaban dosage. Scheduled Holter monitor for 48 hours.",
+        "attending_physician": "Dr. Amina Patel"
+      },
+      {
+        "date": "2023-09-18",
+        "department": "Rheumatology",
+        "reason": "Severe knee joint pain",
+        "diagnosis": "Progression of bilateral knee osteoarthritis",
+        "treatment_plan": "Intra-articular corticosteroid injection in left knee. Discussed potential future arthroplasty.",
+        "attending_physician": "Dr. Thomas Wright"
+      }
+    ]
+  },
+  {
+    "patient_id": "P-1004",
+    "first_name": "Sophia",
+    "last_name": "Martinez",
+    "age": 35,
+    "gender": "Female",
+    "blood_type": "AB+",
+    "chronic_conditions": [
+      "Migraines with Aura",
+      "Endometriosis"
+    ],
+    "recent_visits": [
+      {
+        "date": "2023-10-30",
+        "department": "Neurology",
+        "reason": "Increased frequency of severe headaches with visual disturbances",
+        "diagnosis": "Chronic migraines with aura",
+        "treatment_plan": "Initiated preventative therapy with Topiramate. Provided Sumatriptan for acute abortive therapy.",
+        "attending_physician": "Dr. Emily Tran"
+      },
+      {
+        "date": "2023-02-14",
+        "department": "Gynecology",
+        "reason": "Pelvic pain management",
+        "diagnosis": "Symptomatic endometriosis",
+        "treatment_plan": "Continued continuous combined oral contraceptives. Scheduled for follow-up ultrasound.",
+        "attending_physician": "Dr. Rachel Cohen"
+      }
+    ]
+  },
+  {
+    "patient_id": "P-1005",
+    "first_name": "David",
+    "last_name": "Okonkwo",
+    "age": 60,
+    "gender": "Male",
+    "blood_type": "O+",
+    "chronic_conditions": [
+      "Type 2 Diabetes Mellitus",
+      "Hyperlipidemia",
+      "Diabetic Neuropathy"
+    ],
+    "recent_visits": [
+      {
+        "date": "2024-02-15",
+        "department": "Endocrinology",
+        "reason": "Quarterly diabetes management, HbA1c check",
+        "diagnosis": "Suboptimally controlled Type 2 Diabetes (HbA1c: 8.2%)",
+        "treatment_plan": "Added GLP-1 receptor agonist (Semaglutide) to Metformin regimen. Referral to nutritionist.",
+        "attending_physician": "Dr. Laura Vance"
+      },
+      {
+        "date": "2023-11-20",
+        "department": "Podiatry",
+        "reason": "Routine diabetic foot exam",
+        "diagnosis": "Mild peripheral neuropathy, no active ulcerations",
+        "treatment_plan": "Prescribed diabetic footwear. Patient education on daily foot inspection.",
+        "attending_physician": "Dr. Gregory House"
+      }
+    ]
+  },
+  {
+    "patient_id": "P-1006",
+    "first_name": "Linda",
+    "last_name": "Gomez",
+    "age": 41,
+    "gender": "Female",
+    "blood_type": "A-",
+    "chronic_conditions": [
+      "Chronic Kidney Disease Stage 2",
+      "Hypothyroidism"
+    ],
+    "recent_visits": [
+      {
+        "date": "2024-01-22",
+        "department": "Nephrology",
+        "reason": "Follow-up renal panel",
+        "diagnosis": "Stable CKD Stage 2 (eGFR: 72 mL/min)",
+        "treatment_plan": "Continue blood pressure management. Maintain low sodium diet. Follow-up in 6 months.",
+        "attending_physician": "Dr. Richard Kim"
+      },
+      {
+        "date": "2023-08-11",
+        "department": "Endocrinology",
+        "reason": "Fatigue and weight gain",
+        "diagnosis": "Hypothyroidism (Elevated TSH)",
+        "treatment_plan": "Adjusted Levothyroxine dose from 50mcg to 75mcg daily.",
+        "attending_physician": "Dr. Laura Vance"
+      }
+    ]
+  },
+  {
+    "patient_id": "P-1007",
+    "first_name": "Jordan",
+    "last_name": "Alvarez",
+    "age": 19,
+    "gender": "Non-binary",
+    "blood_type": "O+",
+    "chronic_conditions": [],
+    "recent_visits": [
+      {
+        "date": "2024-02-28",
+        "department": "Urgent Care",
+        "reason": "High fever, body aches, severe dry cough",
+        "diagnosis": "Influenza A positive",
+        "treatment_plan": "Prescribed Oseltamivir (Tamiflu) 75mg twice daily for 5 days. Rest and hydration advised.",
+        "attending_physician": "Dr. Amanda Blake"
+      }
+    ]
+  }
+]

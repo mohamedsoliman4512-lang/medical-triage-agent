@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aegishealth.ai/schemas/a2a-triage-message.json",
+  "title": "AegisHealth A2A triage message",
+  "description": "Strict envelope used by the Triage Agent to hand state and context to Specialist Agents. Unknown fields are rejected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "message_id",
+    "thread_id",
+    "timestamp",
+    "sender",
+    "receiver",
+    "intent",
+    "patient_id",
+    "triage",
+    "human_review"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": "1.0",
+      "description": "A2A protocol version; receivers must reject any other value."
+    },
+    "message_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique id of this message (idempotency / tracing)."
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "LangGraph checkpointer thread id; lets a reviewer resume the same run."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC ISO-8601 creation time."
+    },
+    "sender": { "$ref": "#/$defs/agent" },
+    "receiver": { "$ref": "#/$defs/agent" },
+    "intent": {
+      "enum": ["handoff_to_specialist", "request_human_review", "report_result"],
+      "description": "Why this message is being sent."
+    },
+    "patient_id": {
+      "type": "string",
+      "pattern": "^P-[0-9]{4}$"
+    },
+    "triage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symptoms", "confidence_score", "urgency", "suggested_specialty"],
+      "properties": {
+        "symptoms": { "type": "string", "minLength": 1 },
+        "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "urgency": { "enum": ["low", "medium", "high", "critical"] },
+        "suggested_specialty": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string" },
+        "red_flags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Minimum necessary clinical context fetched through the MCP server.",
+      "properties": {
+        "age": { "type": "integer", "minimum": 0, "maximum": 130 },
+        "chronic_conditions": { "type": "array", "items": { "type": "string" } },
+        "recent_visit_count": { "type": "integer", "minimum": 0 },
+        "last_visit_date": { "type": "string", "format": "date" }
+      }
+    },
+    "human_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "status"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "status": { "enum": ["not_required", "pending", "approved", "rejected"] },
+        "reviewer": { "type": "string" },
+        "notes": { "type": "string" },
+        "reviewed_at": { "type": "string", "format": "date-time" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "enum": ["approved", "rejected"] } } },
+          "then": { "required": ["reviewer", "reviewed_at"] }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "description": "Safety rule: a handoff to a specialist is only valid when no review is needed or a doctor approved it.",
+      "if": { "properties": { "intent": { "const": "handoff_to_specialist" } }, "required": ["intent"] },
+      "then": { "properties": { "human_review": { "properties": { "status": { "enum": ["not_required", "approved"] } } } } }
+    }
+  ],
+  "$defs": {
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "role"],
+      "properties": {
+        "agent_id": { "type": "string", "minLength": 1 },
+        "role": { "enum": ["triage_agent", "doctor", "specialist_agent"] }
+      }
+    }
+  },
+  "examples": [
+    {
+      "protocol_version": "1.0",
+      "message_id": "0b6c6f0e-4c1d-4b53-9f0a-6d1c2f3a9e11",
+      "thread_id": "case-P-1007",
+      "timestamp": "2026-11-14T10:00:00Z",
+      "sender": { "agent_id": "triage-agent-01", "role": "triage_agent" },
+      "receiver": { "agent_id": "specialist-agent-01", "role": "specialist_agent" },
+      "intent": "handoff_to_specialist",
+      "patient_id": "P-1007",
+      "triage": {
+        "symptoms": "High fever, body aches, severe dry cough",
+        "confidence_score": 0.9,
+        "urgency": "medium",
+        "suggested_specialty": "Infectious Disease",
+        "rationale": "Symptom pattern matches prior Influenza A visit.",
+        "red_flags": []
+      },
+      "context": { "age": 19, "chronic_conditions": [], "recent_visit_count": 1, "last_visit_date": "2024-02-28" },
+      "human_review": { "required": false, "status": "not_required" }
+    }
+  ]
+}

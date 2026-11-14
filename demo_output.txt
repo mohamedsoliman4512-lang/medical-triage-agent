@@ -1,0 +1,74 @@
+2026-11-14 22:59:09,300 INFO node=triage_agent start patient_id=P-1007
+2026-11-14 22:59:10,693 INFO [mcp] starting server transport=stdio
+2026-11-14 22:59:10,718 INFO [mcp] Processing request of type CallToolRequest
+2026-11-14 22:59:10,718 INFO [mcp] records served patient_id=P-1007
+2026-11-14 22:59:10,722 INFO [mcp] Processing request of type ListToolsRequest
+2026-11-14 22:59:10,971 INFO node=triage_agent done confidence=0.97 specialty=Infectious Disease
+2026-11-14 22:59:10,971 INFO route confidence=0.97 threshold=0.85 -> specialist_agent
+2026-11-14 22:59:10,971 INFO node=specialist_agent start specialty=Infectious Disease
+2026-11-14 22:59:10,978 INFO node=triage_agent start patient_id=P-1003
+2026-11-14 22:59:11,998 INFO [mcp] starting server transport=stdio
+2026-11-14 22:59:12,022 INFO [mcp] Processing request of type CallToolRequest
+2026-11-14 22:59:12,027 INFO [mcp] records served patient_id=P-1003
+2026-11-14 22:59:12,030 INFO [mcp] Processing request of type ListToolsRequest
+2026-11-14 22:59:12,212 INFO node=triage_agent done confidence=0.7 specialty=Cardiology
+2026-11-14 22:59:12,213 INFO route confidence=0.70 threshold=0.85 -> doctor_review
+2026-11-14 22:59:12,213 INFO PAUSED before ('doctor_review',) (thread=case-P-1003) - awaiting doctor
+2026-11-14 22:59:12,213 INFO route confidence=0.70 threshold=0.85 -> doctor_review
+2026-11-14 22:59:12,213 INFO node=doctor_review decision=approved reviewer=Dr. Amina Patel
+2026-11-14 22:59:12,218 INFO route review approved=True
+2026-11-14 22:59:12,218 INFO node=specialist_agent start specialty=Cardiology
+2026-11-14 22:59:12,221 INFO node=triage_agent start patient_id=P-1004
+2026-11-14 22:59:13,264 INFO [mcp] starting server transport=stdio
+2026-11-14 22:59:13,289 INFO [mcp] Processing request of type CallToolRequest
+2026-11-14 22:59:13,289 INFO [mcp] records served patient_id=P-1004
+2026-11-14 22:59:13,298 INFO [mcp] Processing request of type ListToolsRequest
+2026-11-14 22:59:13,468 INFO node=triage_agent done confidence=0.7 specialty=Neurology
+2026-11-14 22:59:13,468 INFO route confidence=0.70 threshold=0.85 -> doctor_review
+2026-11-14 22:59:13,470 INFO PAUSED before ('doctor_review',) (thread=case-P-1004) - awaiting doctor
+2026-11-14 22:59:13,472 INFO route confidence=0.70 threshold=0.85 -> doctor_review
+2026-11-14 22:59:13,474 INFO node=doctor_review decision=rejected reviewer=Dr. Emily Tran
+2026-11-14 22:59:13,476 INFO route review approved=False
+2026-11-14 22:59:13,480 INFO node=triage_agent start patient_id=P-9999
+2026-11-14 22:59:14,438 INFO [mcp] starting server transport=stdio
+2026-11-14 22:59:14,466 INFO [mcp] Processing request of type CallToolRequest
+2026-11-14 22:59:14,468 WARNING [mcp] patient not found patient_id=P-9999
+2026-11-14 22:59:14,468 INFO [mcp] Processing request of type ListToolsRequest
+2026-11-14 22:59:14,609 WARNING node=triage_agent record fetch failed code=-32004 msg=Patient P-9999 not found
+2026-11-14 22:59:14,610 INFO node=triage_agent done confidence=0.0 specialty=General Medicine
+2026-11-14 22:59:14,610 INFO route confidence=0.00 threshold=0.85 -> doctor_review
+2026-11-14 22:59:14,612 INFO PAUSED before ('doctor_review',) (thread=case-P-9999) - awaiting doctor
+
+=== Case 1: high confidence -> straight to specialist ===
+{
+  "patient_id": "P-1007",
+  "specialty": "Infectious Disease",
+  "urgency": "medium",
+  "next_steps": [
+    "Schedule Infectious Disease consult (medium urgency).",
+    "Review chronic conditions: none"
+  ],
+  "human_review_status": "not_required"
+}
+
+=== Case 2: low confidence -> pause for human review ===
+Paused: True | next: ['doctor_review']
+Confidence: 0.7 | Matched Cardiology on: palpitation, chest, dizziness. Red flags present (chest tightness, dizziness); confidence capped for safety.
+
+=== Case 2 resumed after doctor approval (same thread) ===
+{
+  "patient_id": "P-1003",
+  "specialty": "Cardiology",
+  "urgency": "high",
+  "next_steps": [
+    "Schedule Cardiology consult (high urgency).",
+    "Review chronic conditions: Osteoarthritis, Atrial Fibrillation, Coronary Artery Disease"
+  ],
+  "human_review_status": "approved"
+}
+
+=== Case 3: doctor rejects -> pipeline stops ===
+Final status: doctor_rejected | plan: None
+
+=== Case 4: unknown patient -> MCP error -> escalate ===
+Paused: True | confidence: 0.0
